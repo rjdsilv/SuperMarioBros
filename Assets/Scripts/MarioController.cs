@@ -14,7 +14,7 @@ public class MarioController : MonoBehaviour {
     const float MAX_JUMP_TIME = 0.40f;
 
     // Inspector Declaration.
-    public float speed = 5f;
+    public float speed = 4;
 
     // Class Attributes.
     private bool canContinueJump = false;
