@@ -30,7 +30,7 @@ public class MarioController : MonoBehaviour {
         marioAnimator = GetComponent<Animator>();
     }
 	
-	// Update is called once per frame
+	// FixedUpdate is called once per frame and will be used for physics
 	void FixedUpdate ()
     {
         marioRigidBody2D.velocity = new Vector2(Input.GetAxis("Horizontal"), 0) * speed;
@@ -45,11 +45,16 @@ public class MarioController : MonoBehaviour {
         }
     }
 
+    // FixedUpdate is called once per frame and will be used for animations.
     void Update()
     {
         PlayProperAnimation();
     }
 
+    /// <summary>
+    /// Indicates if Mario is actually moving to the right.
+    /// </summary>
+    /// <returns>true if moving to the right. false otherwise.</returns>
     private bool IsMovingRight()
     {
         if (Input.GetKey(KeyCode.RightArrow))
@@ -63,6 +68,10 @@ public class MarioController : MonoBehaviour {
         return false;
     }
 
+    /// <summary>
+    /// Indicates if Mario is actually moving to the left.
+    /// </summary>
+    /// <returns>true if moving to the left. false otherwise.</returns>
     private bool IsMovingLeft()
     {
         if (Input.GetKey(KeyCode.LeftArrow))
@@ -76,15 +85,19 @@ public class MarioController : MonoBehaviour {
         return false;
     }
 
+    /// <summary>
+    /// Indicates if Mario is actually jumping.
+    /// </summary>
+    /// <returns>true if Mario is jumping. false otherwise.</returns>
     private bool IsJumping()
     {
-        if (Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             jumpTime = Time.time;
             return true;
         }
 
-        if (Input.GetKey(KeyCode.X))
+        if (Input.GetKey(KeyCode.X) || Input.GetKey(KeyCode.UpArrow))
         {
             if (Time.time - jumpTime < MAX_JUMP_TIME)
             {
@@ -95,21 +108,37 @@ public class MarioController : MonoBehaviour {
         return false;
     }
 
+    /// <summary>
+    /// Indicates if Mario was previously moving to the right.
+    /// </summary>
+    /// <returns>true Mario was previously moving to the right. false otherwise.</returns>
     private bool WasMovingRight()
     {
         return previousMovementDirection == MovementDirection.RIGHT;
     }
 
+    /// <summary>
+    /// Indicates if Mario was previously moving to the left.
+    /// </summary>
+    /// <returns>true Mario was previously moving to the left. false otherwise.</returns>
     private bool WasMovingLeft()
     {
         return previousMovementDirection == MovementDirection.LEFT;
     }
 
+    /// <summary>
+    /// Indicates if Mario is currently facing right.
+    /// </summary>
+    /// <returns>true Mario is currently facing right. false otherwise.</returns>
     private bool IsFacingRight()
     {
         return currentMovementDirection == MovementDirection.RIGHT;
     }
 
+    /// <summary>
+    /// Indicates if Mario is currently stoped.
+    /// </summary>
+    /// <returns>true if Mario is stoped. false otherwise.</returns>
     private bool IsStoped()
     {
         bool isStopped = false;
@@ -135,6 +164,9 @@ public class MarioController : MonoBehaviour {
         return isStopped;
     }
 
+    /// <summary>
+    /// Plays Mario's proper animations depending on his current state.
+    /// </summary>
     private void PlayProperAnimation()
     {
         if (IsJumping())
