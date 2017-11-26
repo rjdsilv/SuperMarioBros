@@ -4,4 +4,7 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/SuperMarioBros_1stLevel.unity
+    guid: d972bbf022c6f1a48a36b110112d2f43

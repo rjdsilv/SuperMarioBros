@@ -17,8 +17,11 @@ public class MarioController : MonoBehaviour {
     public float speed = 5f;
 
     // Class Attributes.
+    private bool canContinueJump = false;
+    private bool isGrounded = false;
     private float jumpTime = 0;
     private Rigidbody2D marioRigidBody2D;
+    private Collider2D marioCollider2D;
     private Animator marioAnimator;
     private MovementDirection currentMovementDirection = MovementDirection.RIGHT;
     private MovementDirection previousMovementDirection = MovementDirection.RIGHT;
@@ -27,6 +30,7 @@ public class MarioController : MonoBehaviour {
     void Start ()
     {
         marioRigidBody2D = GetComponent<Rigidbody2D>();
+        marioCollider2D = GetComponent<Collider2D>();
         marioAnimator = GetComponent<Animator>();
     }
 	
@@ -43,6 +47,18 @@ public class MarioController : MonoBehaviour {
         {
             marioRigidBody2D.AddForce(transform.up * -25);
         }
+    }
+
+    // Detects if the player remains in collision.
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        isGrounded = true;
+    }
+    
+    // Detects if the player exited a collision.
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        isGrounded = false;
     }
 
     // FixedUpdate is called once per frame and will be used for animations.
@@ -91,18 +107,30 @@ public class MarioController : MonoBehaviour {
     /// <returns>true if Mario is jumping. false otherwise.</returns>
     private bool IsJumping()
     {
-        if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.UpArrow))
+        // Just start a jump if player is on the ground.
+        if (isGrounded)
         {
-            jumpTime = Time.time;
-            return true;
+            canContinueJump = true;
+            if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                jumpTime = Time.time;
+                return true;
+            }
         }
 
-        if (Input.GetKey(KeyCode.X) || Input.GetKey(KeyCode.UpArrow))
+        // If the jump key is not released continue getting up for a maximum ammount of time.
+        if ((Input.GetKey(KeyCode.X) || Input.GetKey(KeyCode.UpArrow)) && canContinueJump)
         {
             if (Time.time - jumpTime < MAX_JUMP_TIME)
             {
                 return true;
             }
+        }
+
+        // It the jump key was released, the jump no longer can continue.
+        if (Input.GetKeyUp(KeyCode.X) || Input.GetKeyUp(KeyCode.UpArrow))
+        {
+            canContinueJump = false;
         }
 
         return false;
@@ -144,7 +172,7 @@ public class MarioController : MonoBehaviour {
         bool isStopped = false;
 
         // Key just released.
-        if (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.X))
+        if (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.X))
         {
             isStopped = true;
         }
