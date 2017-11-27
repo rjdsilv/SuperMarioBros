@@ -23,6 +23,7 @@ public class MarioController : MonoBehaviour {
     private Rigidbody2D marioRigidBody2D;
     private Collider2D marioCollider2D;
     private Animator marioAnimator;
+    private AudioSource marioJumpSound;
     private MovementDirection currentMovementDirection = MovementDirection.RIGHT;
     private MovementDirection previousMovementDirection = MovementDirection.RIGHT;
 
@@ -32,6 +33,7 @@ public class MarioController : MonoBehaviour {
         marioRigidBody2D = GetComponent<Rigidbody2D>();
         marioCollider2D = GetComponent<Collider2D>();
         marioAnimator = GetComponent<Animator>();
+        marioJumpSound = GetComponent<AudioSource>();
     }
 	
 	// FixedUpdate is called once per frame and will be used for physics
@@ -67,7 +69,7 @@ public class MarioController : MonoBehaviour {
     // FixedUpdate is called once per frame and will be used for animations.
     void Update()
     {
-        PlayProperAnimation();
+        PlayProperAnimationAndSounds();
     }
 
     /// <summary>
@@ -198,10 +200,16 @@ public class MarioController : MonoBehaviour {
     /// <summary>
     /// Plays Mario's proper animations depending on his current state.
     /// </summary>
-    private void PlayProperAnimation()
+    private void PlayProperAnimationAndSounds()
     {
         if (IsJumping())
         {
+            // Plays jump sound if not playing already
+            if (!marioJumpSound.isPlaying)
+            {
+                marioJumpSound.Play();
+            }
+
             if (IsFacingRight())
             {
                 marioAnimator.Play("MarioJumpingRight");
