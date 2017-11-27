@@ -45,7 +45,10 @@ public class MarioController : MonoBehaviour {
         }
         else
         {
-            marioRigidBody2D.AddForce(transform.up * -25);
+            if (!isGrounded)
+            {
+                marioRigidBody2D.AddForce(transform.up * -25);
+            }
         }
     }
 
@@ -208,11 +211,12 @@ public class MarioController : MonoBehaviour {
                 marioAnimator.Play("MarioJumpingLeft");
             }
         }
-        else if (IsMovingRight())
+        // Only show walking animation when grounded.
+        else if (IsMovingRight() && isGrounded)
         {
             marioAnimator.Play("MarioWalkingRight");
         }
-        else if (IsMovingLeft())
+        else if (IsMovingLeft() && isGrounded)
         {
             marioAnimator.Play("MarioWalkingLeft");
         }
