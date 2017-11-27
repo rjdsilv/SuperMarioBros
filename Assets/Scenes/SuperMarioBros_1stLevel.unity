@@ -147,6 +147,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 61692883470010850, guid: 5b3fcbade11c5ff4d8be3943c36a0c42,
+        type: 2}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5b3fcbade11c5ff4d8be3943c36a0c42, type: 2}
   m_IsPrefabParent: 0
@@ -508,6 +513,11 @@ Prefab:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 61692883470010850, guid: 5b3fcbade11c5ff4d8be3943c36a0c42,
+        type: 2}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5b3fcbade11c5ff4d8be3943c36a0c42, type: 2}
   m_IsPrefabParent: 0
@@ -632,7 +642,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 1217460509}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 30d47cdcf68bff540b16892f332784f1, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -945,6 +955,11 @@ Prefab:
     - target: {fileID: 4908209601195928, guid: 5b3fcbade11c5ff4d8be3943c36a0c42, type: 2}
       propertyPath: m_LocalScale.y
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 61692883470010850, guid: 5b3fcbade11c5ff4d8be3943c36a0c42,
+        type: 2}
+      propertyPath: m_Material
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5b3fcbade11c5ff4d8be3943c36a0c42, type: 2}

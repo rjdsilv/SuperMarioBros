@@ -47,10 +47,7 @@ public class MarioController : MonoBehaviour {
         }
         else
         {
-            if (!isGrounded)
-            {
-                marioRigidBody2D.AddForce(transform.up * -25);
-            }
+            marioRigidBody2D.AddForce(transform.up * -25);
         }
     }
 
